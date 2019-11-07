@@ -11,22 +11,22 @@ var dy = -2;
 
 var paddleHeight = 10;
 var paddleWidth = 100;
-var paddleWidth2 = 100; 
+var paddleWidth2 = 100;
 var paddleHeight2 = 10;
 var paddleX = (canvas.width-paddleWidth)/2;
 var paddleX2 = (canvas.width-paddleWidth2)/2;
 
 var rightPressed = false;
 var leftPressed = false;
-var aPressed = false; 
+var aPressed = false;
 var dPressed = false;
 
 var context = canvas.getContext('2d');
-let hitCount = 0 
+let hitCount = 0
 
 var RectX = 0;
 var RectY = canvas.height / 2;
-var rectHeight = 15; 
+var rectHeight = 15;
 var rectWidth = canvas.width;
 
 var rY = canvas.height/2 - 15
@@ -42,8 +42,8 @@ var ballColor = '#39ff14'
 var colorChoise1 = colorP1
 var colorChoise2 = colorP2
 var colorChoiseB = ballColor
-var dy = answer 
-var dx = answer 
+var dy = answer
+var dx = answer
 
 var brickHitCount = 0
 
@@ -54,7 +54,7 @@ var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = canvas.height / 2 - 25;
 var brickOffsetLeft = 30;
-  
+
 var bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
   bricks[c] = [];
@@ -62,12 +62,20 @@ for(var c=0; c<brickColumnCount; c++) {
     bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
-let box = document.createElement('div') 
+
+var bleep = new Audio(); 
+bleep.src = "bleep2.mp3"
+var bleep2 = new Audio(); 
+bleep2.src = "bleep2.mp3"
+var bleep3 = new Audio(); 
+bleep3.src = "bleep3.mp3"
+bleep3.volume = 0.6
+let box = document.createElement('div')
 let start = document.createElement('div')
 
 let box2 = document.createElement('div')
 let tryAgain = document.createElement('div')
- 
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("keydown", keyDownHandler2, false);
@@ -92,8 +100,7 @@ function drawBricks() {
       }
     }
   }
-  
-  
+
   function collisionDetection() {
     for(var c=0; c<brickColumnCount; c++) {
       for(var r=0; r<brickRowCount; r++) {
@@ -102,6 +109,7 @@ function drawBricks() {
           if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
             dy = -dy;
             b.status = 0;
+            bleep3.play();
           }
         }
       }
@@ -197,7 +205,7 @@ function gameover(){
     scoreText.innerText = "SCORE: " + hitCount;
     endText.append(scoreText)
     scoreText.style.position = 'absolute'
-    scoreText.style.left = '68px'
+    scoreText.style.left = '75px'
     scoreText.style.top = '35px'
     scoreText.style.fontSize = '25px'
 
@@ -217,7 +225,7 @@ function gameover(){
     tryAgain.style.bottom = '27px'
 }
 
-function createButton(){ 
+function createButton(){
     var btn = document.createElement("BUTTON");
     btn.innerHTML = "START";
     start.append(btn);
@@ -227,7 +235,8 @@ function createButton(){
     btn.style.left = '-13px'
     btn.addEventListener("click", startGame);
   }
-  function createButton2(){ 
+
+  function createButton2(){
     var btn2 = document.createElement("BUTTON");
     btn2.innerHTML = "TRY AGAIN";
     tryAgain.append(btn2);
@@ -240,12 +249,12 @@ function createButton(){
 createButton()
 createButton2()
 function startGame(){
-    interval = setInterval(draw, 10);   
+    interval = setInterval(draw, 10);
     box.remove()
 }
 function reStartGame(){
     document.location.reload();
-    interval = setInterval(draw, 10);   
+    interval = setInterval(draw, 10);
     box.remove()
 }
 
@@ -291,16 +300,20 @@ function draw() {
     drawScore();
 
 
-    if(hitCount >= 10){
+    if(hitCount >= 11){
         drawBricks();
         collisionDetection();
     }
-    
+
     if(hitCount >= 5) {
         drawRect();
         if(y + dy < RectY + rectHeight && hitCount >= 3) {
             brickHitCount = brickHitCount + 1;
             dy = -dy;
+            console.log('playinig 3')
+
+            bleep3.play();
+
             if(brickHitCount >= 1){
                 rectHeight = 10
             }
@@ -313,31 +326,30 @@ function draw() {
             rectHeight = 0
             rectWidth = 0
             }
-            }       
-    }
-
-    if(rX + 100 > canvas.width || rX < 0){
-        rDX = -rDX
+            }
+            
     }
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
+        console.log('playing 2')
+        bleep2.play()
     }
-    //To make ball bounce off paddles 
+    //To make ball bounce off paddles
     if(y + dy < ballRadius) {
         if(x > paddleX2 && x < paddleX2 + paddleWidth2) {
             dy = -dy;
             dy += .15;
             dx += .15;
             hitCount = hitCount + 1;
-    
+            console.log('playinig 1')
+            bleep.play()
         }
     else {
-        
 
-        clearInterval(interval); 
+
+        clearInterval(interval);
         gameover();
-        //  alert("PLAYER 1 WINS! "+ "the ball was hit "+hitCount+" times");
     }
     }
     else if(y + dy > canvas.height-ballRadius) {
@@ -346,18 +358,17 @@ function draw() {
             dy -= .15;
             dx -= .15;
             hitCount = hitCount + 1;
-        
-    
+            console.log('playinig 1')
+            bleep.play()
+
     }
     else {
-        // alert("PLAYER 2 WINS! "+ "the ball was hit "+hitCount+" times");
-        // document.location.reload();
-        clearInterval(interval); 
-        gameover() 
+        clearInterval(interval);
+        gameover()
     }
     }
 
-    
+
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
         paddleX += 5;
     }
@@ -376,4 +387,4 @@ function draw() {
 }
 
 
-// var interval = setInterval(draw, 10);
+ 
