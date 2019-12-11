@@ -122,6 +122,12 @@ function drawScore() {
     ctx.fillText("Score: "+hitCount, 8, 20);
 }
 
+function drawUserName() {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("User: "+localStorage.getItem("userName"), 8, 43);
+}
+
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
@@ -157,42 +163,56 @@ function keyUpHandler2(e) {
     }
 }
 function createBox(){
-    document.body.append(box)
-    title = document.createElement('h1')
-    title.innerText = "PONG"
-    box.append(title)
-    title.style.position = 'absolute'
-    title.style.left = '73px'
-    title.style.fontSize = '56px'
-    title.style.bottom = '73px'
+    if(!localStorage.getItem("userName")){
+// PONG 
+        document.body.append(box)
+        title = document.createElement('h1')
+        title.innerText = "PONG"
+        box.append(title)
+        title.style.position = 'absolute'
+        title.style.left = '73px'
+        title.style.fontSize = '56px'
+        title.style.bottom = '83px'
+// With a twist 
+        title2 = document.createElement('h3')
+        title2.innerText = "(with a twist)"
+        box.append(title2)
+        title2.style.position = 'absolute'
+        title2.style.left = '95px'
+        title2.style.bottom = '80px'
+        title2.style.fontSize = '20px'
+// Start button 
+        box.append(start);
+        start.style.height = "40px"
+        start.style.width = "100px"
+        start.style.backgroundColor = "blue"
+        start.style.position = 'absolute'
+        start.style.left = '100px'
+        start.style.bottom = '27px'
+// Input box 
+        const inputName = document.createElement('INPUT')
+        box.append(inputName)
+        inputName.setAttribute("type", "text");
+        inputName.style.position = 'absolute'
+        inputName.style.left = '45px'
+        inputName.style.bottom = '70px'
+        inputName.style.fontSize = '20px'
 
-    title2 = document.createElement('h3')
-    title2.innerText = "(with a twist)"
-    box.append(title2)
-    title2.style.position = 'absolute'
-    title2.style.left = '95px'
-    title2.style.bottom = '70px'
-    title2.style.fontSize = '20px'
-
-    box.style.height = "200px"
-    box.style.width = "300px"
-    box.style.backgroundColor = "red"
-    box.style.position = 'absolute'
-    box.style.left = '567px'
-    box.style.bottom = canvas.height / 2 + 'px'
-
-    box.append(start);
-    start.style.height = "50px"
-    start.style.width = "100px"
-    start.style.backgroundColor = "blue"
-    start.style.position = 'absolute'
-    start.style.left = '100px'
-    start.style.bottom = '27px'
+        box.style.height = "200px"
+        box.style.width = "300px"
+        box.style.backgroundColor = "red"
+        box.style.position = 'absolute'
+        box.style.left = '567px'
+        box.style.bottom = canvas.height / 2 + 'px'
+    } else {
+        startGame()
+    }
 }
 
 
 function gameover(){
     document.body.append(box2)
+// GAME OVer
     endText = document.createElement('h1')
     endText.innerText = "GAME OVER"
     box2.append(endText)
@@ -200,7 +220,7 @@ function gameover(){
     endText.style.left = '20px'
     endText.style.top = '-5px'
     endText.style.fontSize = '40px'
-
+// Score 
     scoreText = document.createElement('h2')
     scoreText.innerText = "SCORE: " + hitCount;
     endText.append(scoreText)
@@ -208,14 +228,7 @@ function gameover(){
     scoreText.style.left = '75px'
     scoreText.style.top = '35px'
     scoreText.style.fontSize = '25px'
-
-    box2.style.height = "200px"
-    box2.style.width = "300px"
-    box2.style.backgroundColor = "red"
-    box2.style.position = 'absolute'
-    box2.style.left = '567px'
-    box2.style.bottom = canvas.height / 2 + 'px'
-
+// Try again button 
     box2.append(tryAgain);
     tryAgain.style.height = "50px"
     tryAgain.style.width = "100px"
@@ -223,6 +236,28 @@ function gameover(){
     tryAgain.style.position = 'absolute'
     tryAgain.style.left = '100px'
     tryAgain.style.bottom = '27px'
+ // Log out button 
+    var logOut = document.createElement("BUTTON");
+    logOut.innerHTML = "LOG OUT";
+    box2.append(logOut);
+    logOut.style.fontSize = '15px'
+    logOut.style.backgroundColor = "blue"
+    logOut.style.position = 'absolute'
+    logOut.style.left = '0px'
+    logOut.addEventListener("click", ()=> {
+        localStorage.clear()
+        reStartGame()
+    }
+        
+        )
+        ;
+
+    box2.style.height = "200px"
+    box2.style.width = "300px"
+    box2.style.backgroundColor = "red"
+    box2.style.position = 'absolute'
+    box2.style.left = '567px'
+    box2.style.bottom = canvas.height / 2 + 'px'
 }
 
 function createButton(){
@@ -233,7 +268,11 @@ function createButton(){
     btn.style.backgroundColor = "blue"
     btn.style.position = 'absolute'
     btn.style.left = '-13px'
-    btn.addEventListener("click", startGame);
+    btn.addEventListener("click", ()=>{
+        const inputName = document.querySelector("input").value
+        localStorage.setItem("userName", inputName)
+        startGame()
+    });
   }
 
   function createButton2(){
@@ -254,10 +293,9 @@ function startGame(){
 }
 function reStartGame(){
     document.location.reload();
-    interval = setInterval(draw, 10);
-    box.remove()
+    // interval = setInterval(draw, 10);
+    // box.remove()
 }
-
 function drawRect() {
     ctx.beginPath();
     ctx.rect(RectX, RectY - 10, rectWidth, rectHeight);
@@ -298,6 +336,7 @@ function draw() {
     drawPaddle();
     drawPaddle2();
     drawScore();
+    drawUserName();
 
 
     if(hitCount >= 11){
@@ -310,8 +349,6 @@ function draw() {
         if(y + dy < RectY + rectHeight && hitCount >= 3) {
             brickHitCount = brickHitCount + 1;
             dy = -dy;
-            console.log('playinig 3')
-
             bleep3.play();
 
             if(brickHitCount >= 1){
@@ -332,7 +369,6 @@ function draw() {
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
-        console.log('playing 2')
         bleep2.play()
     }
     //To make ball bounce off paddles
@@ -342,7 +378,6 @@ function draw() {
             dy += .15;
             dx += .15;
             hitCount = hitCount + 1;
-            console.log('playinig 1')
             bleep.play()
         }
     else {
@@ -385,6 +420,4 @@ function draw() {
     y += dy;
     rX += rDX;
 }
-
-
  
