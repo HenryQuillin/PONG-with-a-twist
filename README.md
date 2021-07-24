@@ -11,11 +11,10 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#Gameplay">Gameplay</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -26,14 +25,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://imgur.com/Z1AvGu5)
-
+A web-based two-player PONG game with multiple levels. As the game progresses, obstacles appear on the PONG board. And your score increases, the ball's speed progressively gets faster and the obstacles get more and more challenging to beat. Includes a sign in/logout feature utilizing local storage.
 
 
 ### Built With
 
-* [](JavaScript)
-* [](HTML)
+* [JavaScript]()
+* [HTML]()
 
 
 <!-- GETTING STARTED -->
@@ -52,14 +50,12 @@ To get a local copy up and running follow these simple steps.
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
+## Gameplay
+![Screen Shot 2021-04-05 at 1 06 53 PM](https://i.imgur.com/Z1AvGu5.png)
+![Screen Shot 2021-04-05 at 1 06 53 PM](https://i.imgur.com/5q6LlzB.png)
+![Screen Shot 2021-04-05 at 1 06 53 PM](https://i.imgur.com/7mefTaO.png)
+![Screen Shot 2021-04-05 at 1 06 53 PM](https://i.imgur.com/Hjc8Rg4.png)
+![Screen Shot 2021-04-05 at 1 06 53 PM](https://i.imgur.com/ZWySOAJ.png)
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -84,7 +80,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [Linkedin](https://www.linkedin.com/in/henry-quillin-014919204/) - henryquillin@gmail.com
+Henry Quillin - [Linkedin](https://www.linkedin.com/in/henry-quillin-014919204/) - henryquillin@gmail.com
 
 Project Link: [https://github.com/github_username/PONG-with-a-twist](https://github.com/github_username/PONG-with-a-twist)
 
@@ -93,9 +89,7 @@ Project Link: [https://github.com/github_username/PONG-with-a-twist](https://git
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* [Thanks to @AsherForman for contributing](@https://github.com/AsherForman)
-* []()
-* []()
+* Thanks to [@AsherForman](https://github.com/AsherForman) for contributing
 
 
 
